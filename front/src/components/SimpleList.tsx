@@ -13,6 +13,8 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import ListIcon from "@material-ui/icons/List";
 import PersonIcon from "@material-ui/icons/Person";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import CreateIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     palette: {
       color: grey[300],
+    },
+    shape: {
+      height: 60,
     },
   })
 );
@@ -38,53 +43,65 @@ const SimpleList: React.FC = () => {
         component="nav"
         aria-label="main mailbox folders"
       >
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
+          <ListItemIcon>
+            <TwitterIcon className={classes.palette} />
+          </ListItemIcon>
+          <ListItemText />
+        </ListItem>
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <HomeIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <ExploreIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Explore" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <NotificationsIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Notifications" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <EmailIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Messages" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <BookmarkIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Bookmarks" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <ListIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Lists" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <PersonIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
-        <ListItem button component="a" href="#">
+        <ListItem className={classes.shape} button component="a" href="#">
           <ListItemIcon>
             <MoreHorizIcon className={classes.palette} />
           </ListItemIcon>
           <ListItemText primary="More" />
+        </ListItem>
+        <ListItem className={classes.shape} button component="a" href="#">
+          <ListItemIcon>
+            <CreateIcon className={classes.palette} />
+          </ListItemIcon>
+          <ListItemText primary="Tweet" />
         </ListItem>
       </List>
     </div>
