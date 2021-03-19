@@ -7,8 +7,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import { indigo, grey } from "@material-ui/core/colors";
-import { type } from "node:os";
+// import { indigo, grey } from "@material-ui/core/colors";
+// import { type } from "node:os";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 type Props = {};
 type Item = {
+  userId: number;
   iconName: string;
   iconSrc: string;
   name: string;
@@ -34,12 +35,13 @@ type Item = {
 };
 
 const TweetListItem: React.FC<Item> = ({
+  userId,
   iconName,
   iconSrc,
   name,
   message,
 }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <div>
       <ListItem alignItems="flex-start">
@@ -47,10 +49,13 @@ const TweetListItem: React.FC<Item> = ({
           <Avatar alt={iconName} src={iconSrc} />
         </ListItemAvatar>
         <ListItemText
+          key={userId}
           primary={name}
           secondary={
             <React.Fragment>
-              <Typography align="left">{message}</Typography>
+              <Typography component="span" variant="body2" align="left">
+                {message}
+              </Typography>
             </React.Fragment>
           }
         />
@@ -59,48 +64,57 @@ const TweetListItem: React.FC<Item> = ({
     </div>
   );
 };
-
 const TweetList: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const [items, setItems] = useState<Item[]>([]);
 
+  const anyItems: Item[] = [
+    {
+      userId: 0,
+      iconName: "Remy Sharp",
+      iconSrc: "static/...jpg",
+      name: "Ali Connors",
+      message:
+        "— I'll be in your neighborhood doing  errands…ddddd dddddddddddd ddddddddddddddddddddddddddddddddd dddddd dddddddddddddddddddddddd dddddddddd dddddddd ddddddddddddddddddddddddddddddddddddddd",
+    },
+    {
+      userId: 1,
+      iconName: "Travis Howard",
+      iconSrc: "static/...jpg",
+      name: "Summer BBQ",
+      message: " — Wish I could come, but I'm out of town this…",
+    },
+    {
+      userId: 2,
+      iconName: "Cindy Baker",
+      iconSrc: "static/...jpg",
+      name: "Oui Oui",
+      message:
+        " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
+    },
+    {
+      userId: 3,
+      iconName: "Cindy Baker",
+      iconSrc: "static/...jpg",
+      name: "Oui Oui",
+      message:
+        " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
+    },
+  ];
+
   useEffect(() => {
-    setItems([
-      {
-        iconName: "Remy Sharp",
-        iconSrc: "static/...jpg",
-        name: "Ali Connors",
-        message:
-          "— I'll be in your neighborhood doing  errands…ddddd dddddddddddd ddddddddddddddddddddddddddddddddd dddddd dddddddddddddddddddddddd dddddddddd dddddddd ddddddddddddddddddddddddddddddddddddddd",
-      },
-      {
-        iconName: "Travis Howard",
-        iconSrc: "static/...jpg",
-        name: "Summer BBQ",
-        message: " — Wish I could come, but I'm out of town this…",
-      },
-      {
-        iconName: "Cindy Baker",
-        iconSrc: "static/...jpg",
-        name: "Oui Oui",
-        message:
-          " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
-      },
-      {
-        iconName: "Cindy Baker",
-        iconSrc: "static/...jpg",
-        name: "Oui Oui",
-        message:
-          " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
-      },
-    ]);
+    setItems(anyItems);
+    // console.log(anyItems.map((item) => ({ item })));
+    // TODO
   }, [props]);
 
   return (
     <List className={classes.root}>
       {items.map((i) => (
         <TweetListItem
+          key={i.userId}
+          userId={i.userId}
           iconName={i.iconName}
           iconSrc={i.iconSrc}
           name={i.name}
