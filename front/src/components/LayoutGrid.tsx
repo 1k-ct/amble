@@ -6,14 +6,13 @@ import SimpleList from "./SimpleList";
 import TweetList from "./TweetList";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    minWidth: 170,
   },
 }));
 
@@ -24,7 +23,7 @@ const CenteredGrid: React.FC = () => {
     <Container>
       <div className={classes.root}>
         <Grid container>
-          <Grid item xs={2}>
+          <Grid className={classes.paper} item xs={2}>
             <SimpleList />
             <Typography
               component="div"
@@ -32,11 +31,13 @@ const CenteredGrid: React.FC = () => {
             />
           </Grid>
           <Grid item xs={7}>
-            {/* <Paper className={classes.paper}>xs=6</Paper> */}
             <TweetList />
           </Grid>
-          <Grid item xs={3}>
-            <Paper className={classes.paper}>xs=3</Paper>
+          <Grid className={classes.paper} item xs={3}>
+            <Paper
+              style={{ backgroundColor: "#cfe8fc", height: "100%" }}
+              className={classes.paper}
+            ></Paper>
           </Grid>
         </Grid>
       </div>
