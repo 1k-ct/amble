@@ -1,7 +1,7 @@
 import React from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
+import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { indigo, grey } from "@material-ui/core/colors";
@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      //   maxWidth: 360,
+      maxWidth: 360,
+      minWidth: 170,
       backgroundColor: indigo[800],
       color: "#FFFFFF",
     },
