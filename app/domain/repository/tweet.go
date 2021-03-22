@@ -6,7 +6,7 @@ import (
 )
 
 type TweetRepository interface {
-	RegisterTweet(c *gin.Context) (*model.Response, error)
+	RegisterTweet(c *gin.Context, tweet *model.Tweet) (*model.Response, error)
 	GetTweetByIDs(c *gin.Context, id []int64) ([]*model.Tweet, error)
 	DeleteTweetByID(c *gin.Context, id int64) (*model.Response, error)
 }
