@@ -1,4 +1,4 @@
-package db
+package database
 
 import (
 	"os"
@@ -17,6 +17,19 @@ type ConfigList struct {
 	ServerPort     string
 }
 
+func NewLocalDB(user, pass, dbName string) (*ConfigList, error) {
+	config := &ConfigList{
+		DbDriverName:   "mysql",
+		DbName:         dbName,
+		DbUserName:     user,
+		DbUserPassword: pass,
+		DbHost:         "127.0.0.1",
+		DbPort:         "3306",
+		ServerPort:     "8080",
+	}
+
+	return config, nil
+}
 func NewDB(file string) (*ConfigList, error) {
 	if err := godotenv.Load(file); err != nil {
 		return nil, err
@@ -33,6 +46,8 @@ func NewDB(file string) (*ConfigList, error) {
 	return config, nil
 }
 func (c *ConfigList) Connect() (*gorm.DB, error) {
+	// _ "github.com/go-sql-driver/mysql"
+
 	DBMS := c.DbDriverName
 	USER := c.DbUserName
 	PASS := c.DbUserPassword
