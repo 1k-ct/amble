@@ -62,3 +62,13 @@ func (c *ConfigList) Connect() (*gorm.DB, error) {
 
 	return db, nil
 }
+func (c *ConfigList) NewMakeDB(tables ...interface{}) error {
+	db, err := c.Connect()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	db.AutoMigrate(tables...)
+	return nil
+}
