@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Tweet struct {
-	ID           int64  `gorm:"primary_key" json:"id,omitempty"`
+	ID           int64  `gorm:"primary_key" json:"id"`
 	Name         string `json:"name"`
 	Content      string `json:"content"`
 	LikeCount    int64  `json:"like_count"`
@@ -19,4 +19,7 @@ type Tweet struct {
 type Response struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+}
+type Request struct {
+	ID int64
 }
