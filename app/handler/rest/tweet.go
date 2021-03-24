@@ -12,6 +12,8 @@ import (
 type TweetHandler interface {
 	Tweet(c *gin.Context)
 	GetTweet(c *gin.Context)
+	GetTweets(c *gin.Context)
+	UpdateTweet(c *gin.Context)
 }
 
 type tweetHandler struct {
@@ -70,4 +72,35 @@ func (th *tweetHandler) GetTweet(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, tweet)
+}
+func (th *tweetHandler) GetTweets(c *gin.Context) {
+	type request struct {
+		IDs []int64 `json:"ids"`
+	}
+	req := &request{}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, errorJSON)
+		return
+	}
+	tweets, err := th.tweetUseCase.GetTweetByIDs(c, req.IDs)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, errorJSON)
+		return
+	}
+	c.JSON(http.StatusOK, tweets)
+}
+func (th *tweetHandler) UpdateTweet(c *gin.Context) {
+	id := c.Param("id")
+	ID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, errorJSON)
+		return
+	}
+	// TODO 更新がすでにされている場合の処理を書く
+	// ok, err := delete....(); if err != nil ...{}; if !ok {}
+	if err := th.tweetUseCase.DeleteTweetByID(c, int64(ID)); err != nil {
+		c.JSON(http.StatusInternalServerError, serverError)
+		return
+	}
+	c.JSON(http.StatusNoContent, gin.H{"msg": "ok"})
 }

@@ -25,6 +25,9 @@ func TweetHandler(r *gin.RouterGroup) (R gin.IRoutes) {
 	{
 		v1.POST("/tweet", tweetHandler.Tweet)
 		v1.GET("/tweet/:id", tweetHandler.GetTweet)
+		v1.PUT("/tweet/:id", tweetHandler.UpdateTweet)
+
+		v1.POST("/tweets", tweetHandler.GetTweets)
 	}
 
 	return r
