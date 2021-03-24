@@ -4,6 +4,7 @@ import "time"
 
 type Tweet struct {
 	ID           int64  `gorm:"primary_key" json:"id"`
+	IsPrivate    bool   `json:"is_private"`
 	Name         string `json:"name"`
 	Content      string `json:"content"`
 	LikeCount    int64  `json:"like_count"`
