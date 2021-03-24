@@ -62,7 +62,7 @@ func (tp *tweetPersistence) GetTweetByID(c *gin.Context, id int64) (*model.Tweet
 	}
 	return tweet, nil
 }
-func (tp *tweetPersistence) GetTweetByIDLimitOffset(c *gin.Context, id, limit, offset int64) ([]*model.Tweet, error) {
+func (tp *tweetPersistence) GetTweetByIDs(c *gin.Context, ids []int64) ([]*model.Tweet, error) {
 	db, err := connect()
 	if err != nil {
 		return nil, err
@@ -70,12 +70,22 @@ func (tp *tweetPersistence) GetTweetByIDLimitOffset(c *gin.Context, id, limit, o
 	defer db.Close()
 
 	tweet := []*model.Tweet{}
-	if err := db.Limit(limit).Offset(offset).Find(&tweet).Error; err != nil {
+	if err := db.Find(&tweet, ids).Error; err != nil {
 		return nil, err
 	}
 
 	return tweet, nil
 }
-func (tp *tweetPersistence) DeleteTweetByID(c *gin.Context, id int64) (*model.Response, error) {
-	return nil, nil
+func (tp *tweetPersistence) DeleteTweetByID(c *gin.Context, id int64) error {
+	db, err := connect()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	tweet := &model.Tweet{}
+	if err := db.Model(&tweet).Where("id = ?", id).Update("is_private", true).Error; err != nil {
+		return err
+	}
+	return nil
 }

@@ -44,7 +44,7 @@ func TestRegisterTweet(t *testing.T) {
 	}
 }
 
-func TestGetTweetByIDs(t *testing.T) {
+func TestGetTweetByID(t *testing.T) {
 	var c *gin.Context
 	tweet, err := NewTweetPersistence().GetTweetByID(c, 2)
 	if err != nil {
@@ -55,7 +55,7 @@ func TestGetTweetByIDs(t *testing.T) {
 
 func TestGetTweetByIDLimitOffset(t *testing.T) {
 	var c *gin.Context
-	tweets, err := NewTweetPersistence().GetTweetByIDLimitOffset(c, 2, 3, 3)
+	tweets, err := NewTweetPersistence().GetTweetByIDs(c, []int64{1, 2})
 	if err != nil {
 		t.Error(err)
 	}
@@ -63,4 +63,23 @@ func TestGetTweetByIDLimitOffset(t *testing.T) {
 		fmt.Println(tweet)
 	}
 	// log.Println(tweets)
+}
+func TestDeleteTweetByID(t *testing.T) {
+	var c *gin.Context
+	err := NewTweetPersistence().DeleteTweetByID(c, 1)
+	if err != nil {
+		t.Error(err)
+	}
+}
+func TestGetTweetByIDs(t *testing.T) {
+	var c *gin.Context
+	tweets, err := NewTweetPersistence().GetTweetByIDs(c, []int64{1, 2})
+	if err != nil {
+		t.Error(err)
+	}
+	for i := 0; i < len(tweets); i++ {
+		if tweets[i].ID == int64(i) {
+			t.Error(err)
+		}
+	}
 }
