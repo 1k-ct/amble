@@ -9,8 +9,8 @@ import (
 type TweetUseCase interface {
 	RegisterTweet(c *gin.Context, tweet *model.Tweet) error
 	GetTweetByID(c *gin.Context, id int64) (*model.Tweet, error)
-	GetTweetByIDLimitOffset(c *gin.Context, id, limit, offset int64) ([]*model.Tweet, error)
-	DeleteTweetByID(c *gin.Context, id int64) (*model.Response, error)
+	GetTweetByIDs(c *gin.Context, ids []int64) ([]*model.Tweet, error)
+	DeleteTweetByID(c *gin.Context, id int64) error
 }
 type tweetUseCase struct {
 	tweetRepository repository.TweetRepository
@@ -35,17 +35,17 @@ func (tu *tweetUseCase) GetTweetByID(c *gin.Context, id int64) (*model.Tweet, er
 	}
 	return tweet, nil
 }
-func (tu *tweetUseCase) GetTweetByIDLimitOffset(c *gin.Context, id, limit, offset int64) ([]*model.Tweet, error) {
-	tweet, err := tu.tweetRepository.GetTweetByIDLimitOffset(c, id, limit, offset)
+func (tu *tweetUseCase) GetTweetByIDs(c *gin.Context, ids []int64) ([]*model.Tweet, error) {
+	tweet, err := tu.tweetRepository.GetTweetByIDs(c, ids)
 	if err != nil {
 		return nil, err
 	}
 	return tweet, nil
 }
-func (tu *tweetUseCase) DeleteTweetByID(c *gin.Context, id int64) (*model.Response, error) {
-	response, err := tu.tweetRepository.DeleteTweetByID(c, id)
+func (tu *tweetUseCase) DeleteTweetByID(c *gin.Context, id int64) error {
+	err := tu.tweetRepository.DeleteTweetByID(c, id)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return response, nil
+	return nil
 }
