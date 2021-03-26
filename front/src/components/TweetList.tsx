@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -9,6 +9,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 // import { indigo, grey } from "@material-ui/core/colors";
 // import { type } from "node:os";
+import { GetAPIItems, GetTweets } from "./rest/api";
+import axios, { AxiosError } from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,7 +35,17 @@ type Item = {
   name: string;
   message: string;
 };
-
+type GetItems = {
+  id: number;
+  is_private: false;
+  name: string;
+  content: string;
+  like_count: number;
+  retweet_count: number;
+  reply_count: number;
+  created_at: string;
+  updated_at: string;
+};
 const TweetListItem: React.FC<Item> = ({
   userId,
   iconName,
@@ -67,61 +79,72 @@ const TweetListItem: React.FC<Item> = ({
 const TweetList: React.FC<Props> = (props) => {
   const classes = useStyles();
 
-  const [items, setItems] = useState<Item[]>([]);
+  type IPostRequest = {
+    ids: number[];
+  };
 
-  const anyItems: Item[] = [
-    {
-      userId: 0,
-      iconName: "Remy Sharp",
-      iconSrc: "static/...jpg",
-      name: "Ali Connors",
-      message:
-        "— I'll be in your neighborhood doing  errands…ddddd dddddddddddd ddddddddddddddddddddddddddddddddd dddddd dddddddddddddddddddddddd dddddddddd dddddddd ddddddddddddddddddddddddddddddddddddddd",
-    },
-    {
-      userId: 1,
-      iconName: "Travis Howard",
-      iconSrc: "static/...jpg",
-      name: "Summer BBQ",
-      message: " — Wish I could come, but I'm out of town this…",
-    },
-    {
-      userId: 2,
-      iconName: "Cindy Baker",
-      iconSrc: "static/...jpg",
-      name: "Oui Oui",
-      message:
-        " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
-    },
-    {
-      userId: 3,
-      iconName: "Cindy Baker",
-      iconSrc: "static/...jpg",
-      name: "Oui Oui",
-      message:
-        " — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…  — Do you have Paris recommendations? Have you ever…",
-    },
-  ];
+  type IPostResponse = {
+    id: number;
+    is_private: false;
+    name: string;
+    content: string;
+    like_count: number;
+    retweet_count: number;
+    reply_count: number;
+    created_at: string;
+    updated_at: string;
+  };
+
+  type IErrorResponse = {
+    error: string;
+  };
+
+  const requestData: IPostRequest = {
+    ids: [1, 2, 3, 4, 5, 6, 7, 8],
+  };
+
+  const [tweetItems, setTweetItems] = useState<IPostResponse[]>([]);
 
   useEffect(() => {
-    setItems(anyItems);
-    // console.log(anyItems.map((item) => ({ item })));
+    axios
+      .post<IPostResponse[]>("http://localhost:8080/api/v1/tweets", requestData)
+      .then((res) => {
+        setTweetItems(res.data);
+        console.log(res.data);
+      })
+      .catch((e: AxiosError<IErrorResponse>) => {
+        if (e.response !== undefined) {
+          console.log(e.response.data.error);
+        }
+      });
     // TODO
-  }, [props]);
+  }, []);
 
   return (
     <List className={classes.root}>
-      {items.map((i) => (
+      {tweetItems.map((i) => (
         <TweetListItem
-          key={i.userId}
-          userId={i.userId}
-          iconName={i.iconName}
-          iconSrc={i.iconSrc}
+          key={i.id}
+          userId={i.id}
+          iconName={i.name}
+          iconSrc={i.name}
           name={i.name}
-          message={i.message}
+          message={i.content}
         />
       ))}
     </List>
   );
 };
 export default TweetList;
+// {
+//   items.map((i) => (
+//     <TweetListItem
+//       key={i.userId}
+//       userId={i.userId}
+//       iconName={i.iconName}
+//       iconSrc={i.iconSrc}
+//       name={i.name}
+//       message={i.message}
+//     />
+//   ));
+// }
