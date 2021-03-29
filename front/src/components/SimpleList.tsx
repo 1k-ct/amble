@@ -15,6 +15,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from "@material-ui/icons/Create";
+import SimplePopover from "./TweetPopover";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -98,11 +99,11 @@ const SimpleList: React.FC = () => {
           </ListItemIcon>
           <ListItemText primary="More" />
         </ListItem>
-        <ListItem className={classes.shape} button component="a" href="#">
+        <ListItem className={classes.shape}>
           <ListItemIcon>
             <CreateIcon className={classes.palette} />
           </ListItemIcon>
-          <ListItemText primary="Tweet" />
+          <SimplePopover />
         </ListItem>
       </List>
     </div>

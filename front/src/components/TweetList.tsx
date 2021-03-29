@@ -100,7 +100,7 @@ const TweetList: React.FC<Props> = (props) => {
   };
 
   const requestData: IPostRequest = {
-    ids: [1, 2, 3, 4, 5, 6, 7, 8],
+    ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 21],
   };
 
   const [tweetItems, setTweetItems] = useState<IPostResponse[]>([]);
