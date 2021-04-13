@@ -1,14 +1,16 @@
 package persistence
 
 import (
-	"fmt"
+	"errors"
 	"log"
+	"reflect"
 	"testing"
 	"time"
 
 	"github.com/1k-ct/twitter-dem/app/domain/model"
 	"github.com/1k-ct/twitter-dem/pkg/database"
-	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 )
 
 func TestRegisterTweet(t *testing.T) {
@@ -29,51 +31,91 @@ func TestRegisterTweet(t *testing.T) {
 
 	tweet := &model.Tweet{
 		// ID:           0,
-		Name:         "sato",
-		Content:      "テストのでーたツイート内容",
-		LikeCount:    0,
-		RetweetCount: 0,
-		ReplyCount:   0,
-		CreatedAt:    time.Now(),
-		UpdatedAt:    time.Now(),
+		Name:      "sato",
+		Content:   "テストのでーたツイート内容",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
-	var c *gin.Context
-	if err := NewTweetPersistence().RegisterTweet(c, tweet); err != nil {
+	if err := NewTweetPersistence().RegisterTweet(tweet); err != nil {
 		t.Error(err)
 	}
 }
 
 func TestGetTweetByID(t *testing.T) {
-	var c *gin.Context
-	tweet, err := NewTweetPersistence().GetTweetByID(c, 2)
+	tweet, err := NewTweetPersistence().GetTweetByID("")
 	if err != nil {
 		t.Error(err)
 	}
 	log.Println(tweet)
 }
 
-func TestGetTweetByIDLimitOffset(t *testing.T) {
-	var c *gin.Context
-	tweets, err := NewTweetPersistence().GetTweetByIDs(c, []int64{1, 2})
-	if err != nil {
-		t.Error(err)
+func Test_tweetPersistence_GetTweetByID(t *testing.T) {
+	type args struct {
+		id string
 	}
-	for _, tweet := range tweets {
-		fmt.Println(tweet)
+	tests := []struct {
+		name      string
+		args      args
+		isPrivate bool
+		wantErr   bool
+	}{
+		{
+			name: "GetTweetID正常",
+			args: args{
+				id: "6",
+			},
+			isPrivate: false,
+			wantErr:   false,
+		},
+		{
+			name: "GetTweetID異常",
+			args: args{
+				id: "1",
+			},
+			isPrivate: true,
+			wantErr:   true,
+		},
 	}
-	// log.Println(tweets)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := NewTweetPersistence().GetTweetByID(tt.args.id)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("tweetPersistence.GetTweetByID() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got == nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) != tt.wantErr {
+					t.Errorf("tweetPersistence.GetTweetByID() error = %v, wantErr %v", err, tt.wantErr)
+				}
+			} else {
+				if !reflect.DeepEqual(got.IsPrivate, tt.isPrivate) {
+					t.Errorf("tweetPersistence.GetTweetByID() = %v, want %v", got, tt.isPrivate)
+				}
+			}
+		})
+	}
 }
+
+// func TestGetTweetByIDLimitOffset(t *testing.T) {
+// 	var c *gin.Context
+// 	tweets, err := NewTweetPersistence().GetTweetByIDs(c, []int64{1, 2})
+// 	if err != nil {
+// 		t.Error(err)
+// 	}
+// 	for _, tweet := range tweets {
+// 		fmt.Println(tweet)
+// 	}
+// 	// log.Println(tweets)
+// }
 func TestDeleteTweetByID(t *testing.T) {
-	var c *gin.Context
-	err := NewTweetPersistence().DeleteTweetByID(c, 1)
+	err := NewTweetPersistence().DeleteTweetByID(1)
 	if err != nil {
 		t.Error(err)
 	}
 }
 func TestGetTweetByIDs(t *testing.T) {
-	var c *gin.Context
-	tweets, err := NewTweetPersistence().GetTweetByIDs(c, []int64{1, 2})
+	tweets, err := NewTweetPersistence().GetTweetByIDs([]int64{1, 2, 3, 4, 5})
 	if err != nil {
 		t.Error(err)
 	}
@@ -81,5 +123,8 @@ func TestGetTweetByIDs(t *testing.T) {
 		if tweets[i].ID == int64(i) {
 			t.Error(err)
 		}
+	}
+	for _, tweet := range tweets {
+		log.Println(tweet)
 	}
 }
