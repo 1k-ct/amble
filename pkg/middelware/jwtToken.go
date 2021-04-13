@@ -1,3 +1,5 @@
+// Copyright (c) 2020 Steven Victor
+// https://github.com/tienbm90/simple-jwt-auth/blob/master/LICENSE
 package middelware
 
 import (
