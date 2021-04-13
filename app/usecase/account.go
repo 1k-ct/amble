@@ -8,6 +8,7 @@ import (
 type AccountUseCase interface {
 	FindByID(ID string) (*model.User, error)
 	RegisterUserAccount(user *model.User) error
+	GetUserName(staticID string) (string, error)
 }
 type accountUseCase struct {
 	accountRepository repository.AccountRepository
@@ -30,4 +31,11 @@ func (au *accountUseCase) RegisterUserAccount(user *model.User) error {
 		return err
 	}
 	return nil
+}
+func (au *accountUseCase) GetUserName(staticID string) (string, error) {
+	userName, err := au.accountRepository.GetUserName(staticID)
+	if err != nil {
+		return "", err
+	}
+	return userName, nil
 }
