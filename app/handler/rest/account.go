@@ -23,6 +23,7 @@ type AccountHandler interface {
 	SignUp(c *gin.Context)
 	Login(c *gin.Context)
 	Refresh(c *gin.Context)
+	EditUserProfile(c *gin.Context)
 }
 type accountHandler struct {
 	accountUseCase usecase.AccountUseCase
@@ -155,4 +156,31 @@ func (ah *accountHandler) Refresh(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusUnauthorized, "refresh expired")
 	}
+}
+func (ah *accountHandler) EditUserProfile(c *gin.Context) {
+	var request struct {
+		ID        string `json:"id"`
+		UserName  string `json:"username"`
+		Location  string `json:"location"`
+		FreeSpace string `json:"free_space"`
+	}
+	if err := c.BindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, appErrors.ErrMeatdataMsg(err, appErrors.ErrorJSON))
+		return
+	}
+	user := &model.User{
+		UserName:  request.UserName,
+		Location:  request.Location,
+		FreeSpace: request.FreeSpace,
+	}
+	_, err := ah.accountUseCase.EditUserProfile(user)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusBadRequest, appErrors.ErrMeatdataMsg(err, appErrors.ErrorJSON))
+			return
+		}
+		c.JSON(http.StatusInternalServerError, appErrors.ServerError)
+		return
+	}
+	c.JSON(http.StatusCreated, gin.H{"message": "edit profile ok"})
 }

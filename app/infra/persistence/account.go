@@ -61,3 +61,24 @@ func (ap *accountPersistence) GetUserName(staticID string) (string, error) {
 	}
 	return user.UserName, nil
 }
+func (ap *accountPersistence) EditUserProfile(userProfile *model.User) (*model.User, error) {
+	db, err := Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	if err := db.Where("id = ?", userProfile.ID).
+		Find(&userProfile).Error; err != nil {
+		return nil, err
+	}
+	user := &model.User{
+		UserName:  userProfile.UserName,
+		Location:  userProfile.Location,
+		FreeSpace: userProfile.FreeSpace,
+	}
+	if err := db.Save(&user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
