@@ -88,3 +88,45 @@ func (ap *actionsPersistence) Reply(reply *model.Reply) error {
 	}
 	return nil
 }
+func (ap *actionsPersistence) GetLikeUser(toTweetID string) ([]*model.LikedUser, error) {
+	db, err := Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	likedUsers := []*model.LikedUser{}
+	if err := db.Where("to_tweet_id = ?", toTweetID).
+		Find(&likedUsers).Error; err != nil {
+		return nil, err
+	}
+	return likedUsers, nil
+}
+func (ap *actionsPersistence) GetRetweetUser(toTweetID string) ([]*model.RetweetedUser, error) {
+	db, err := Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	retweetUsers := []*model.RetweetedUser{}
+	if err := db.Where("to_tweet_id = ?", toTweetID).
+		Find(&retweetUsers).Error; err != nil {
+		return nil, err
+	}
+	return retweetUsers, nil
+}
+func (ap *actionsPersistence) GetReply(toTweetID string) ([]*model.Reply, error) {
+	db, err := Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	replies := []*model.Reply{}
+	if err := db.Where("to_tweet_id = ?", toTweetID).
+		Find(&replies).Error; err != nil {
+		return nil, err
+	}
+	return replies, nil
+}

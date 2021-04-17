@@ -9,6 +9,9 @@ type ActionsUseCase interface {
 	Like(userStaticID, staticID string) error
 	Retweet(userStaticID, staticID string) error
 	Reply(reply *model.Reply) error
+	GetLikeUser(toTweetID string) ([]*model.LikedUser, error)
+	GetRetweetUser(toTweetID string) ([]*model.RetweetedUser, error)
+	GetReply(toTweetID string) ([]*model.Reply, error)
 }
 type actionsUseCase struct {
 	actionsUseCase repository.ActionsRepository
@@ -37,4 +40,25 @@ func (au *actionsUseCase) Reply(reply *model.Reply) error {
 		return err
 	}
 	return nil
+}
+func (au *actionsUseCase) GetLikeUser(toTweetID string) ([]*model.LikedUser, error) {
+	likedUsers, err := au.actionsUseCase.GetLikeUser(toTweetID)
+	if err != nil {
+		return nil, err
+	}
+	return likedUsers, nil
+}
+func (au *actionsUseCase) GetRetweetUser(toTweetID string) ([]*model.RetweetedUser, error) {
+	retweetUsers, err := au.actionsUseCase.GetRetweetUser(toTweetID)
+	if err != nil {
+		return nil, err
+	}
+	return retweetUsers, nil
+}
+func (au *actionsUseCase) GetReply(toTweetID string) ([]*model.Reply, error) {
+	replies, err := au.actionsUseCase.GetReply(toTweetID)
+	if err != nil {
+		return nil, err
+	}
+	return replies, nil
 }

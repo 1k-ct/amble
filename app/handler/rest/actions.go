@@ -18,6 +18,10 @@ type ActionsHandler interface {
 	Like(c *gin.Context)
 	Retweet(c *gin.Context)
 	Reply(c *gin.Context)
+
+	GetLikeUser(c *gin.Context)
+	GetRetweetUser(c *gin.Context)
+	GetReply(c *gin.Context)
 }
 type actionsHandler struct {
 	actionsUseCase usecase.ActionsUseCase
@@ -110,4 +114,62 @@ func (ah *actionsHandler) Reply(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"message": "retwee ok"})
+}
+func (ah *actionsHandler) GetLikeUser(c *gin.Context) {
+	toTweetID := c.Param(":id")
+	likedUsers, err := ah.actionsUseCase.GetLikeUser(toTweetID)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusBadRequest, appErrors.ErrMeatdataMsg(err, appErrors.ErrorJSON))
+			return
+		}
+		c.JSON(http.StatusInternalServerError, appErrors.ServerError)
+		return
+	}
+	// type likedUser struct {
+	// 	ToTweetID    string `json:"to_tweet_id"`
+	// 	UserStaticID string `json:"user_static_id"`
+	// }
+	// type response struct {
+	// 	LikedUsers []*likedUser
+	// }
+	// likes := []*likedUser{}
+	// for _, lu := range likedUsers {
+	// 	liked := &likedUser{}
+
+	// 	liked.ToTweetID = lu.ToTweetID
+	// 	liked.UserStaticID = lu.UserStaticID
+	// 	likes = append(likes, liked)
+	// }
+	// res := &response{
+	// 	LikedUsers: likes,
+	// }
+
+	c.JSON(http.StatusOK, gin.H{"response": likedUsers})
+}
+func (ah *actionsHandler) GetRetweetUser(c *gin.Context) {
+	toTweetID := c.Param(":id")
+	retweetUsers, err := ah.actionsUseCase.GetRetweetUser(toTweetID)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusBadRequest, appErrors.ErrMeatdataMsg(err, appErrors.ErrorJSON))
+			return
+		}
+		c.JSON(http.StatusInternalServerError, appErrors.ServerError)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"response": retweetUsers})
+}
+func (ah *actionsHandler) GetReply(c *gin.Context) {
+	toTweetID := c.Param(":id")
+	replies, err := ah.actionsUseCase.GetReply(toTweetID)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusBadRequest, appErrors.ErrMeatdataMsg(err, appErrors.ErrorJSON))
+			return
+		}
+		c.JSON(http.StatusInternalServerError, appErrors.ServerError)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"response": replies})
 }
