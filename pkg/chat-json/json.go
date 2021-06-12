@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type ChatDataJsonInEmoji struct {
@@ -113,10 +114,11 @@ func BufioScannerJsonFile(fileName string) (*ChatDataJsons, error) {
 }
 
 type ChatAttendee struct {
+	VideoID    string   `json:"video_id"`
 	Authorname []string `json:"authorname"`
 }
 
-func FitchUsersName(fileName string) (*ChatAttendee, error) {
+func FitchUsersName(fileName, videoID string) (*ChatAttendee, error) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		return nil, err
@@ -139,6 +141,7 @@ func FitchUsersName(fileName string) (*ChatAttendee, error) {
 			chatAttendee.Authorname = append(chatAttendee.Authorname, authorName)
 		}
 	}
+	chatAttendee.VideoID = videoID
 	return chatAttendee, nil
 }
 
@@ -163,4 +166,32 @@ func WriteJsonFile(obj interface{}, outputFileName string) error {
 		return err
 	}
 	return nil
+}
+
+//
+//
+// type AttendanceRate struct {
+// 	videoID string
+// }
+// type Member struct {
+// 	Name string
+// }
+func WriteFileJsonAttendanceRate(filename, text string) error {
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	if _, err = f.WriteString(text); err != nil {
+		return err
+	}
+	return nil
+}
+
+// ParseFileNameWithoutExt
+// "dir/dir/file.go" => "file"
+// "dir/file"        => "file"
+func ParseFileNameWithoutExt(path string) string {
+	basefile := filepath.Base(path[:len(path)-len(filepath.Ext(path))])
+	return basefile
 }
