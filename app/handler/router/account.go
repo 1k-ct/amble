@@ -25,6 +25,7 @@ func AccountHandler(r *gin.RouterGroup, secretKey string) (R gin.IRoutes) {
 
 		account.GET("/verify", middelware.TokenAuthMiddleware(secretKey), accountHandler.Verify)
 		account.POST("/refresh", accountHandler.Refresh)
+		account.POST("/profile", middelware.TokenAuthMiddleware(secretKey), accountHandler.EditUserProfile)
 	}
 	return r
 }

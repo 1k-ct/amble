@@ -9,6 +9,7 @@ type AccountUseCase interface {
 	FindByID(ID string) (*model.User, error)
 	RegisterUserAccount(user *model.User) error
 	GetUserName(staticID string) (string, error)
+	EditUserProfile(*model.User) (*model.User, error)
 }
 type accountUseCase struct {
 	accountRepository repository.AccountRepository
@@ -38,4 +39,11 @@ func (au *accountUseCase) GetUserName(staticID string) (string, error) {
 		return "", err
 	}
 	return userName, nil
+}
+func (au *accountUseCase) EditUserProfile(user *model.User) (*model.User, error) {
+	userProfile, err := au.accountRepository.EditUserProfile(user)
+	if err != nil {
+		return nil, err
+	}
+	return userProfile, nil
 }
