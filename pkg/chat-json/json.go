@@ -119,24 +119,13 @@ type ChatAttendee struct {
 }
 
 func FitchUsersName(fileName, videoID string) (*ChatAttendee, error) {
-	file, err := os.Open(fileName)
+	chatAttendee := &ChatAttendee{}
+	chatDataJsons, err := BufioScannerJsonFile(fileName)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	chatAttendee := &ChatAttendee{}
-
-	for scanner.Scan() {
-		text := scanner.Text()
-		jsonBytes := ([]byte)(text)
-		data := new(ChatDataJsonInEmoji)
-
-		if err := json.Unmarshal(jsonBytes, data); err != nil {
-			return nil, err
-		}
-		authorName := data.Addchatitemaction.Item.Livechattextmessagerenderer.Authorname.Simpletext
+	for _, v := range chatDataJsons.ChatDataJsonInEmojis {
+		authorName := v.Addchatitemaction.Item.Livechattextmessagerenderer.Authorname.Simpletext
 		if !IsOverlappingJsonValue(authorName, chatAttendee.Authorname) {
 			chatAttendee.Authorname = append(chatAttendee.Authorname, authorName)
 		}

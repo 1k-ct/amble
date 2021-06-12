@@ -24,15 +24,19 @@ func TestBufioScannerJsonFile(t *testing.T) {
 	}
 }
 func TestFitchUsersName(t *testing.T) {
-	chatAttendee, err := chatjson.FitchUsersName(fileName, "Okokxcgr_II")
+	videoID := "Okokxcgr_II"
+	chatAttendee, err := chatjson.FitchUsersName(fileName, videoID)
 	if err != nil {
 		t.Error(err)
 	}
 	if err := chatjson.WriteJsonFile(chatAttendee, "Okokxcgr_II-names"); err != nil {
 		t.Error(err)
 	}
-	fmt.Println(chatAttendee.Authorname)
-	fmt.Println(len(chatAttendee.Authorname))
+	// fmt.Println(chatAttendee.Authorname)
+	// fmt.Println(len(chatAttendee.Authorname))
+	if chatAttendee.VideoID != videoID {
+		t.Errorf("get: %v != want: %v", chatAttendee.VideoID, videoID)
+	}
 }
 func TestIsOverlappingJsonValue(t *testing.T) {
 	values := []string{"1", "2", "3"}
