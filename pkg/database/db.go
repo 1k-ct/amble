@@ -7,6 +7,59 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// DatabaseConnection
+// DB_USER=
+// DB_PASS=
+// DB_ADDRESS=database.***.location.rds.amazomaws.com
+// DB_NAME=
+// DB_PORT=
+// db, err := DatabaseConnection()
+// 	if err != nil {
+// 		c.JSON(500, appErrors.ErrMeatdataMsg(err, appErrors.ServerError))
+// 		return
+// 	}
+// 	defer db.Close()
+func DatabaseConnection() (*gorm.DB, error) {
+	config := ConfigList{
+		DbDriverName:   "mysql",
+		DbName:         os.Getenv("DB_NAME"),
+		DbUserName:     os.Getenv("DB_USER"),
+		DbUserPassword: os.Getenv("DB_PASS"),
+		DbHost:         os.Getenv("DB_ADDRESS"),
+		DbPort:         os.Getenv("DB_PORT"),
+	}
+	PROTCOL := "@tcp(" + config.DbHost + ":" + config.DbPort + ")"
+	CONNECT := config.DbUserName + ":" + config.DbUserPassword + PROTCOL + "/" + config.DbName + "?charset=utf8&parseTime=True&loc=Local"
+	db, err := gorm.Open(config.DbDriverName, CONNECT)
+	if err != nil {
+		return db, err
+	}
+	return db, nil
+}
+
+// ------------------------------------------------------
+
+type Databaser interface {
+	LocalDatabase() (*gorm.DB, error)
+}
+
+func NewData() Databaser { return &ConfigList{} }
+func ConnectionDatabase(d Databaser) (*gorm.DB, error) {
+	db, err := d.LocalDatabase()
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+func (c *ConfigList) LocalDatabase() (*gorm.DB, error) {
+	db, err := c.Connect()
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+
+// ------------------------------------------------------
 type ConfigList struct {
 	DbDriverName   string
 	DbName         string
