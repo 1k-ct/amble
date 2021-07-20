@@ -1,3 +1,5 @@
+// Copyright (c) 2020 Steven Victor
+// https://github.com/tienbm90/simple-jwt-auth/blob/master/LICENSE
 package jwtToken
 
 import (
@@ -25,6 +27,9 @@ type TokenDetails struct {
 	RtExpires    int64
 }
 
+func NewTokenDetails() *TokenDetails {
+	return &TokenDetails{}
+}
 func CreateToken(userID, userName, secretKey, refreshKey string) (*TokenDetails, error) {
 	td := &TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 30).Unix() //expires after 30 min
