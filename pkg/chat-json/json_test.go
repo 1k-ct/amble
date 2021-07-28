@@ -24,6 +24,7 @@ func TestBufioScannerJsonFile(t *testing.T) {
 	}
 }
 func TestFitchUsersName(t *testing.T) {
+
 	videoID := "Okokxcgr_II"
 	chatAttendee, err := chatjson.FitchUsersName(fileName, videoID)
 	if err != nil {

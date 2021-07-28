@@ -157,14 +157,6 @@ func WriteJsonFile(obj interface{}, outputFileName string) error {
 	return nil
 }
 
-//
-//
-// type AttendanceRate struct {
-// 	videoID string
-// }
-// type Member struct {
-// 	Name string
-// }
 func WriteFileJsonAttendanceRate(filename, text string) error {
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
