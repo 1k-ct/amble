@@ -1,9 +1,9 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
-	"github.com/1k-ct/twitter-dem/app/handler/router"
+	"github.com/1k-ct/twitter-dem/pkg/database"
 )
 
 func main() {
@@ -15,7 +15,19 @@ func main() {
 	// router.GET("/api/v1/books", bookHandler.Index)
 	// router.GET("/api/v1/book", bookHandler.Home)
 
-	router := router.BookRouter()
+	file := "/.env"
+	config, err := database.NewDB(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db, err := config.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("ok")
+	defer db.Close()
 
-	http.ListenAndServe(":3000", router)
+	// router := router.BookRouter()
+
+	// http.ListenAndServe(":3000", router)
 }
