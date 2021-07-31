@@ -7,7 +7,11 @@ import (
 	"crypto/rsa"
 	"crypto/sha256"
 	"fmt"
+	"io/ioutil"
+	"reflect"
 	"testing"
+
+	cryptoRSA "github.com/1k-ct/twitter-dem/pkg/crypto"
 )
 
 // example
@@ -43,4 +47,20 @@ func TestGenerateKey(t *testing.T) {
 		t.Error(err)
 	}
 	fmt.Println("decrypted message: ", string(decryptedBytes))
+}
+
+func TestParseRSAPrivateKey(t *testing.T) {
+	filename := "../../app/testdata/secret.key"
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		t.Errorf("%+v\n", err)
+	}
+	privateKey, err := cryptoRSA.ParseRSAPrivateKey(data)
+	if err != nil {
+		t.Errorf("%+v\n", err)
+	}
+
+	if reflect.DeepEqual(privateKey, data) {
+		t.Errorf("ParseRSAPrivateKey() = %v, want %v", privateKey, data)
+	}
 }
