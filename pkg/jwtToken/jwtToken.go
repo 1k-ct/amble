@@ -115,13 +115,13 @@ func Extract(token *jwt.Token) (*AccessDetails, error) {
 		userName, userNameOk := claims["user_name"].(string)
 		if !ok || !userOk || !userNameOk {
 			return nil, errors.New("unauthorized")
-		} else {
-			return &AccessDetails{
-				TokenUuid: accessUuid,
-				UserId:    userId,
-				UserName:  userName,
-			}, nil
 		}
+		return &AccessDetails{
+			TokenUuid: accessUuid,
+			UserId:    userId,
+			UserName:  userName,
+		}, nil
+
 	}
 	return nil, errors.New("something went wrong")
 }
