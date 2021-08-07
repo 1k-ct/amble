@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/1k-ct/twitter-dem/app/handler/router"
 	_ "github.com/go-sql-driver/mysql"
@@ -25,7 +24,7 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
-	r := router.InitRouters(os.Getenv("SECRET_KEY"))
+	r := router.InitRouters()
 	if err := r.Run(); err != nil {
 		return
 	}

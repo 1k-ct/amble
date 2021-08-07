@@ -41,8 +41,8 @@ func testform(method string, url string, body io.Reader) (w *httptest.ResponseRe
 		log.Println("AccountHandler Router")
 		log.Fatal(err)
 	}
-	key := os.Getenv("SECRET_KEY")
-	router := InitRouters(key)
+	// key := os.Getenv("SECRET_KEY")
+	router := InitRouters()
 	w = httptest.NewRecorder()
 	c, _ = gin.CreateTestContext(w)
 	c.Request, _ = http.NewRequest(method, url, body)
