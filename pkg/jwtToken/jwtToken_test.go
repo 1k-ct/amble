@@ -5,8 +5,10 @@ import (
 	"log"
 	"net/http"
 	"testing"
+	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -69,4 +71,30 @@ func testCreateToken() string {
 	}
 
 	return got.AccessToken
+}
+
+func TestJWTMaker(t *testing.T) {
+	secretKey := "1234567890123456789012345678901234567890"
+	maker, err := NewJWTMaker(secretKey)
+	require.NoError(t, err)
+
+	userName := "UserName"
+	duration := time.Minute
+
+	issuedAt := time.Now()
+	expiredAt := issuedAt.Add(duration)
+
+	token, err := maker.CreateToken(userName, duration)
+	require.NoError(t, err)
+	require.NotEmpty(t, token)
+	fmt.Println(token)
+
+	payload, err := maker.VerifyToken(token)
+	require.NoError(t, err)
+	require.NotEmpty(t, token)
+
+	require.NotZero(t, payload.ID)
+	require.Equal(t, userName, payload.Username)
+	require.WithinDuration(t, issuedAt, payload.IssuedAt, time.Second)
+	require.WithinDuration(t, expiredAt, payload.ExpiredAt, time.Second)
 }
