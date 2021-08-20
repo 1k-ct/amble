@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/1k-ct/twitter-dem/pkg/database"
+	"github.com/1k-ct/amble/pkg/database"
 )
 
 func main() {

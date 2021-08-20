@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	chatjson "github.com/1k-ct/twitter-dem/pkg/chat-json"
+	chatjson "github.com/1k-ct/amble/pkg/chat-json"
 )
 
 var fileName = "./chat-data/Okokxcgr_II.json"

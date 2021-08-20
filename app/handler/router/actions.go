@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/1k-ct/twitter-dem/app/handler/rest"
-	"github.com/1k-ct/twitter-dem/app/infra/persistence"
-	"github.com/1k-ct/twitter-dem/app/usecase"
+	"github.com/1k-ct/amble/app/handler/rest"
+	"github.com/1k-ct/amble/app/infra/persistence"
+	"github.com/1k-ct/amble/app/usecase"
 	"github.com/gin-gonic/gin"
 )
 

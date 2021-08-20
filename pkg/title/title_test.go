@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/1k-ct/twitter-dem/pkg/title"
+	"github.com/1k-ct/amble/pkg/title"
 )
 
 func TestFetchVideoInfo(t *testing.T) {

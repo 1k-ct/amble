@@ -5,8 +5,8 @@ package middelware
 import (
 	"net/http"
 
-	"github.com/1k-ct/twitter-dem/pkg/appErrors"
-	"github.com/1k-ct/twitter-dem/pkg/jwtToken"
+	"github.com/1k-ct/amble/pkg/appErrors"
+	"github.com/1k-ct/amble/pkg/jwtToken"
 	"github.com/gin-gonic/gin"
 )
 

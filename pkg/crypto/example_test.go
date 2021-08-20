@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	cryptoRSA "github.com/1k-ct/twitter-dem/pkg/crypto"
+	cryptoRSA "github.com/1k-ct/amble/pkg/crypto"
 )
 
 // https://pkg.go.dev/crypto/rsa#PublicKey

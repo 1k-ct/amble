@@ -11,7 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/1k-ct/twitter-dem/app/domain/model"
+	"github.com/1k-ct/amble/app/domain/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
