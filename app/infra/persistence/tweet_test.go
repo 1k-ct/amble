@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/1k-ct/twitter-dem/app/domain/model"
-	"github.com/1k-ct/twitter-dem/pkg/database"
+	"github.com/1k-ct/amble/app/domain/model"
+	"github.com/1k-ct/amble/pkg/database"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )

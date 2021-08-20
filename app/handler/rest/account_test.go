@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/1k-ct/twitter-dem/pkg/appErrors"
+	"github.com/1k-ct/amble/pkg/appErrors"
 	"github.com/joho/godotenv"
 )
 

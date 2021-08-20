@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/1k-ct/twitter-dem/app/domain/model"
+import "github.com/1k-ct/amble/app/domain/model"
 
 type ActionsRepository interface {
 	Like(userStaticID, staticID string) error

@@ -3,8 +3,8 @@ package persistence
 import (
 	"errors"
 
-	"github.com/1k-ct/twitter-dem/app/domain/model"
-	"github.com/1k-ct/twitter-dem/app/domain/repository"
+	"github.com/1k-ct/amble/app/domain/model"
+	"github.com/1k-ct/amble/app/domain/repository"
 	"github.com/jinzhu/gorm"
 	uuid "github.com/satori/go.uuid"
 )

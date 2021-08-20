@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/1k-ct/twitter-dem/app/domain/model"
+	"github.com/1k-ct/amble/app/domain/model"
 )
 
 type TweetRepository interface {

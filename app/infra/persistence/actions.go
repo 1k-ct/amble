@@ -1,8 +1,8 @@
 package persistence
 
 import (
-	"github.com/1k-ct/twitter-dem/app/domain/model"
-	"github.com/1k-ct/twitter-dem/app/domain/repository"
+	"github.com/1k-ct/amble/app/domain/model"
+	"github.com/1k-ct/amble/app/domain/repository"
 	uuid "github.com/satori/go.uuid"
 )
 

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/1k-ct/twitter-dem/app/handler/router"
+	"github.com/1k-ct/amble/app/handler/router"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
