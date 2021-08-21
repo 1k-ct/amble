@@ -110,21 +110,21 @@ func ExtractToken(r *http.Request) string {
 // Extract 抽出
 func Extract(token *jwt.Token) (*AccessDetails, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok && token.Valid {
-		accessUuid, ok := claims["access_uuid"].(string)
-		userId, userOk := claims["user_id"].(string)
-		userName, userNameOk := claims["user_name"].(string)
-		if !ok || !userOk || !userNameOk {
-			return nil, errors.New("unauthorized")
-		}
-		return &AccessDetails{
-			TokenUuid: accessUuid,
-			UserId:    userId,
-			UserName:  userName,
-		}, nil
-
+	if !ok || !token.Valid {
+		return nil, errors.New("something went wrong")
 	}
-	return nil, errors.New("something went wrong")
+
+	accessUuid, accOk := claims["access_uuid"].(string)
+	userId, userOk := claims["user_id"].(string)
+	userName, userNameOk := claims["user_name"].(string)
+	if !accOk || !userOk || !userNameOk {
+		return nil, errors.New("unauthorized")
+	}
+	return &AccessDetails{
+		TokenUuid: accessUuid,
+		UserId:    userId,
+		UserName:  userName,
+	}, nil
 }
 
 // ExtractTokenMetadata トークンのメタデータを抽出
