@@ -6,12 +6,16 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
+	"crypto/x509"
+	"encoding/pem"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 
 	cryptoRSA "github.com/1k-ct/amble/pkg/crypto"
+	"github.com/stretchr/testify/require"
 )
 
 // example
@@ -50,7 +54,7 @@ func TestGenerateKey(t *testing.T) {
 }
 
 func TestParseRSAPrivateKey(t *testing.T) {
-	filename := "../../app/testdata/secret.key"
+	filename := "../../test/private.pem"
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		t.Errorf("%+v\n", err)
@@ -63,4 +67,40 @@ func TestParseRSAPrivateKey(t *testing.T) {
 	if reflect.DeepEqual(privateKey, data) {
 		t.Errorf("ParseRSAPrivateKey() = %v, want %v", privateKey, data)
 	}
+}
+
+// https://www.systutorials.com/how-to-generate-rsa-private-and-public-key-pair-in-go-lang/
+func TestGenerateRSAKey(t *testing.T) {
+	privatekey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		t.Errorf("%+v\n", err)
+	}
+	require.NoErrorf(t, err, "%+v\n", err)
+	publickey := &privatekey.PublicKey
+
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privatekey)
+	privateKeyBlock := &pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	}
+
+	privatePem, err := os.Create("./../../test/private.pem")
+	require.NoErrorf(t, err, "%+v\n", err)
+
+	err = pem.Encode(privatePem, privateKeyBlock)
+	require.NoErrorf(t, err, "%+v\n", err)
+
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publickey)
+	require.NoErrorf(t, err, "%+v\n", err)
+
+	publicKeyBlock := &pem.Block{
+		Type:  "PUBLIC KEY",
+		Bytes: publicKeyBytes,
+	}
+
+	publicPem, err := os.Create("./../../test/public.pem")
+	require.NoErrorf(t, err, "%+v\n", err)
+
+	err = pem.Encode(publicPem, publicKeyBlock)
+	require.NoErrorf(t, err, "%+v\n", err)
 }

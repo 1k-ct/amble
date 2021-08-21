@@ -2,11 +2,9 @@ package database_test
 
 import (
 	"database/sql"
-	"fmt"
 	"testing"
 	"time"
 
-	"github.com/1k-ct/amble/pkg/database"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/xerrors"
@@ -72,145 +70,30 @@ func migrate(db *gorm.DB) error {
 	return nil
 }
 func TestMain(t *testing.T) {
-	config, err := database.NewLocalDB("user", "password", "sample")
-	if err != nil {
-		t.Fatal(err)
-	}
-	db, err := config.Connect()
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer db.Close()
-	// if err := seeds(db); err != nil {
-	// 	t.Fatal(err)
-	// }
-	// books, err := getBook(db)
+	// config, err := database.NewLocalDB("user", "password", "sample")
 	// if err != nil {
 	// 	t.Fatal(err)
 	// }
-	// fmt.Println(books)
-	// authors, err := getAuthor(db)
+	// db, err := config.Connect()
 	// if err != nil {
 	// 	t.Fatal(err)
 	// }
-	// fmt.Println(authors)
-	// publishers, err := getPublisher(db)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
-	// fmt.Println(publishers)
-	// if err := db.AutoMigrate(&Post{}, &Tag{}).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
+	// defer db.Close()
 
-	// if !db.First(&Post{}).RecordNotFound() {
-	// 	t.Fatal(err)
-	// }
-
-	// tag := &Tag{
-	// 	Name:      "tag-name1",
-	// 	Posts:     []Post{},
-	// 	CreatedAt: time.Time{},
-	// 	UpdatedAt: time.Time{},
-	// }
-
-	// post := Post{
-	// 	ID:      4,
-	// 	Title:   "title3",
-	// 	Content: "content3",
-	// 	PublishedAt: sql.NullTime{
-	// 		Time:  time.Now(),
-	// 		Valid: true,
-	// 	},
-	// 	Status: "3",
-	// }
-
-	// if err := db.Create(&post).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// tag := Tag{
-	// 	Name: "tag2",
-	// }
-	// if err := db.Create(&tag).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// postTag := Post{
-	// 	ID:      0,
-	// 	Title:   "title6",
-	// 	Content: "6",
-	// 	Status:  "6",
-	// }
-	// if err := db.Model(&tag).Association("Posts").Append(&postTag).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// tags := []Tag{}
-
-	// if err := db.Preload("Posts").Find(&tags).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// for _, v := range tags {
-	// 	fmt.Println(v.ID, v.Name, v.Posts)
-	// }
-
-	// posts := []Post{}
-	// if err := db.Preload("Tags").Find(&posts).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// // fmt.Println(posts)
-	// for _, v := range posts {
-	// 	fmt.Println(v.ID, v.Title, v.Content, v.Status, v.PublishedAt.Time, v.PublishedAt.Valid, v.Tags)
-	// }
-
-	// if err := db.DropTableIfExists(&Vtuber{}, &VtuberTag{}).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// if err := db.AutoMigrate(&Vtuber{}).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// if err := db.AutoMigrate(&VtuberTag{}).AddForeignKey("vtuber_id", "vtubers(id)", "CASCADE", "CASCADE").Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// vtuber := &Vtuber{
-	// 	Name: "name1",
-	// 	VtuberTags: []VtuberTag{{
-	// 		Tag: "tag1",
-	// 	}, {
-	// 		Tag: "tag2",
-	// 	}},
-	// }
-	// if err := db.Create(vtuber).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	vtubers := []Vtuber{}
-	if err := db.Where("name = ?", "name1").Preload("VtuberTags").Find(&vtubers).Error; err != nil {
-		t.Fatal(err)
-	}
-	fmt.Println(vtubers)
-
-	vtuberTags := []VtuberTag{}
-	if err := db.Where("tag = ?", "tag2").Find(&vtuberTags).Error; err != nil {
-		t.Fatal(err)
-	}
-	for _, v := range vtuberTags {
-		fmt.Println(v.VtuberID)
-	}
-	fmt.Println(vtuberTags)
-	// vtuberTag := VtuberTag{Tag: "tag1"}
-	// vtubers := Vtuber{
-	// 	Name:       "name2",
-	// 	VtuberTags: []VtuberTag{{Tag: "tag2"}},
-	// }
-	// if err := db.Create(&vtuberTag).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// if err := db.Model(&vtuberTag).Association("VtuberTags").Append(&vtubers).Error; err != nil {
-	// 	t.Fatal(err)
-	// }
-	// if err := db.Find(&vtubers).Error; err != nil {
+	// vtubers := []Vtuber{}
+	// if err := db.Where("name = ?", "name1").Preload("VtuberTags").Find(&vtubers).Error; err != nil {
 	// 	t.Fatal(err)
 	// }
 	// fmt.Println(vtubers)
 
+	// vtuberTags := []VtuberTag{}
+	// if err := db.Where("tag = ?", "tag2").Find(&vtuberTags).Error; err != nil {
+	// 	t.Fatal(err)
+	// }
+	// for _, v := range vtuberTags {
+	// 	fmt.Println(v.VtuberID)
+	// }
+	// fmt.Println(vtuberTags)
 }
 
 const (
