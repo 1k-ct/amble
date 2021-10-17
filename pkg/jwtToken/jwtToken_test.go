@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -23,21 +22,21 @@ const (
 	refreshKey  = "testRefreshKey"
 )
 
-func TestUUID(t *testing.T) {
-	u0 := uuid.NewV4()
-	require.NotEmpty(t, u0, "u0:")
-	u1 := uuid.NewV4().String()
-	require.NotEmpty(t, u1, "u1:")
+// func TestUUID(t *testing.T) {
+// 	u0 := uuid.NewV4()
+// 	require.NotEmpty(t, u0, "u0:")
+// 	u1 := uuid.NewV4().String()
+// 	require.NotEmpty(t, u1, "u1:")
 
-	input := "{1831de38-08ee-448e-8f14-9d70357ab3ec}"
-	u2, err := uuid.FromString(input)
-	require.Nil(t, err, "u2:")
-	require.NotEmpty(t, u2, "u2:")
+// 	input := "{1831de38-08ee-448e-8f14-9d70357ab3ec}"
+// 	u2, err := uuid.FromString(input)
+// 	require.Nil(t, err, "u2:")
+// 	require.NotEmpty(t, u2, "u2:")
 
-	u3, err := uuid.FromString(input + "1")
-	require.NotNil(t, err, "u3:")
-	require.NotEmpty(t, u3, "u3:")
-}
+// 	u3, err := uuid.FromString(input + "1")
+// 	require.NotNil(t, err, "u3:")
+// 	require.NotEmpty(t, u3, "u3:")
+// }
 
 func TestCreateToken(t *testing.T) {
 	token := testCreateToken()
