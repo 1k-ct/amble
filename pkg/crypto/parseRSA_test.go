@@ -1,4 +1,4 @@
-// package cryptoRSA_test
+package cryptoRSA_test
 
 // import (
 // 	"bytes"
