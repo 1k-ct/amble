@@ -1,7 +1,6 @@
 package alive
 
 import (
-	"log"
 	"net"
 	"testing"
 	"time"
@@ -44,13 +43,13 @@ func TestAliveMonitoring(t *testing.T) {
 	}
 }
 
-func TestAliveMonitoringAll(t *testing.T) {
-	// address := "192.168.11.6"
-	address := "www.google.com"
-	pingCount := 4
-	status, err := AliveMonitoring(address, pingCount)
-	if err != nil {
-		t.Fatal(err)
-	}
-	log.Println(status)
-}
+// func TestAliveMonitoringAll(t *testing.T) {
+// 	// address := "192.168.11.6"
+// 	address := "www.google.com"
+// 	pingCount := 4
+// 	status, err := AliveMonitoring(address, pingCount)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	log.Println(status)
+// }
