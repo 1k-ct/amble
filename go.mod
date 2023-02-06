@@ -10,7 +10,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/google/uuid v1.3.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/joho/godotenv v1.4.0
+	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.1
 	github.com/twinj/uuid v1.0.0
 	golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8
