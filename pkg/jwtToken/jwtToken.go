@@ -31,6 +31,8 @@ type TokenDetails struct {
 func NewTokenDetails() *TokenDetails {
 	return &TokenDetails{}
 }
+
+// CreateToken() creates a new token and refresh token,  and returns the tokens generated
 func CreateToken(userID, userName, secretKey, refreshKey string) (*TokenDetails, error) {
 	td := &TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 30).Unix() //expires after 30 min
@@ -70,12 +72,11 @@ func CreateToken(userID, userName, secretKey, refreshKey string) (*TokenDetails,
 	}
 	return td, nil
 }
+
+// It takes a request and a secret key, and returns an error if the token is invalid
 func TokenValid(r *http.Request, secretKey string) error {
-	token, err := VerifyToken(r, secretKey)
+	_, err := VerifyToken(r, secretKey)
 	if err != nil {
-		return err
-	}
-	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
 		return err
 	}
 	return nil
@@ -95,6 +96,7 @@ func VerifyToken(r *http.Request, secretKey string) (*jwt.Token, error) {
 }
 
 //get the token from the request body
+// It takes a request object and returns the token string
 func ExtractToken(r *http.Request) string {
 	// Authorization "access_token": ey....xxx
 	// tokenの　"　を含んでいるか気をつける
