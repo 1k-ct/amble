@@ -11,7 +11,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.5.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/twinj/uuid v1.0.0
 	golang.org/x/crypto v0.26.0
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f
