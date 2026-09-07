@@ -1,6 +1,6 @@
 module github.com/1k-ct/amble
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -13,7 +13,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.12.0
 	github.com/twinj/uuid v1.0.0
-	golang.org/x/crypto v0.55.0
+	golang.org/x/crypto v0.56.0
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f
 )
 
