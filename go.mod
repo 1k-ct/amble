@@ -11,7 +11,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.5.1
-	github.com/stretchr/testify v1.12.0
+	github.com/stretchr/testify v1.12.1
 	github.com/twinj/uuid v1.0.0
 	golang.org/x/crypto v0.55.0
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f
@@ -32,6 +32,7 @@ require (
 	github.com/quic-go/quic-go v0.59.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/arch v0.22.0 // indirect
 	golang.org/x/net v0.57.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
@@ -55,5 +56,4 @@ require (
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
 	golang.org/x/sys v0.47.0 // indirect
 	gopkg.in/stretchr/testify.v1 v1.2.2 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
