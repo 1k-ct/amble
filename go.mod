@@ -1,6 +1,6 @@
 module github.com/1k-ct/amble
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -13,7 +13,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.12.1
 	github.com/twinj/uuid v1.0.0
-	golang.org/x/crypto v0.55.0
+	golang.org/x/crypto v0.59.0
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f
 )
 
@@ -34,9 +34,9 @@ require (
 	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/arch v0.22.0 // indirect
-	golang.org/x/net v0.57.0 // indirect
-	golang.org/x/sync v0.22.0 // indirect
-	golang.org/x/text v0.41.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
+	golang.org/x/sync v0.25.0 // indirect
+	golang.org/x/text v0.44.0 // indirect
 	google.golang.org/protobuf v1.36.10 // indirect
 )
 
@@ -54,6 +54,6 @@ require (
 	github.com/myesui/uuid v1.0.0 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
-	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/sys v0.50.0 // indirect
 	gopkg.in/stretchr/testify.v1 v1.2.2 // indirect
 )
